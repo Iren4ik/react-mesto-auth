@@ -1,0 +1,10 @@
+.popup__header_delete-popup {
+  padding: 34px 0 35px;
+  font-size: 1.5em;
+}
+
+@media screen and (max-width: 470px) {
+  .popup__header_delete-popup {
+    font-size: 1.13em;
+  }
+}

@@ -1,0 +1,11 @@
+.profile__intro-name-container {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 8px;
+}
+
+@media screen and (max-width: 820px) {
+  .profile__intro-name-container {
+    margin-left: 28px;
+  }
+}

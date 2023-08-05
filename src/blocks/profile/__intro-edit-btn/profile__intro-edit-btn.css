@@ -1,0 +1,20 @@
+.profile__intro-edit-btn {
+  all: unset;
+  background-image: url(../../../images/pen.svg);
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid #fff;
+  height: 24px;
+  width: 24px;
+  align-self: self-end;
+  margin-bottom: 7px;
+}
+
+@media screen and (max-width: 425px) {
+  .profile__intro-edit-btn {
+    height: 18px;
+    width: 18px;
+    background-size: 7.5px 7.5px;
+  }
+}

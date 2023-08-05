@@ -1,0 +1,9 @@
+.popup__container_type_edit-form {
+  min-height: 330px;
+}
+
+@media screen and (max-width: 470px) {
+  .popup__container_type_edit-form {
+    min-height: 322px;
+  }
+}

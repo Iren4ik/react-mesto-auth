@@ -1,0 +1,39 @@
+.header {
+  margin: 0 auto 0;
+  padding-top: 45px;
+  max-width: 880px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -41px;
+  height: 1px;
+  width: 100%;
+  background-color: rgba(84, 84, 84, 0.7);
+}
+
+@media screen and (max-width: 980px) {
+  .header {
+    margin: 0 auto 0;
+    width: 90%;
+  }
+  .header::after {
+    bottom: -37px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    margin: 0 auto 0;
+    width: 100%;
+  }
+  .header::after {
+    bottom: -29px;
+  }
+}
