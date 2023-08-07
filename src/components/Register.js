@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./styles/Authorization.css";
-import { register } from "../utils/auth.js"
+import {register} from "../utils/auth.js"
 
 function Register() {
 
@@ -42,7 +42,7 @@ function Register() {
             className="authorization__input"
             id="email"
             name="email"
-            type="text"
+            type="email"
             placeholder="Email"
             value={formValue.email}
             onChange={handleChange}
@@ -54,11 +54,12 @@ function Register() {
             name="password"
             type="password"
             placeholder="Пароль"
+            minLength="8"
             value={formValue.password}
             onChange={handleChange}
           />
           <div className="authorization__button-container">
-            <button type="submit" className="authorization__button" onSubmit={handleSubmit}>
+            <button type="submit" className="authorization__button">
               Зарегистрироваться
             </button>
           </div>

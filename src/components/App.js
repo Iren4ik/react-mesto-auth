@@ -28,6 +28,10 @@ function App() {
   const [cardToDelete, setCardToDelete] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
 
+  function handleLogin() {
+    setLoggedIn(true);
+  }
+
   React.useEffect(() => {
     Promise.all([api.getProfileInfo(), api.getInitialCards()])
       .then(([dataUser, dataCards]) => {
@@ -151,15 +155,15 @@ function App() {
 
         <Routes>
           <Route path="/sign-up" element={<Register />} />
-          <Route path="/sign-in" element={<Login />} />
-          <Route path='*' 
+          <Route path="/sign-in" element={<Login handleLogin={handleLogin}/>} />
+          {/* <Route path='*' 
               element={loggedIn ? (<Navigate to='/' replace/>) : (<Navigate to='/sign-in'replace/>)} 
-          />
+          /> */}
           <Route
             path="/"
             element={<ProtectedRouteElement 
               loggedIn={loggedIn} 
-              element={<Main
+              element={Main}
                 onEditAvatar={handleEditAvatarClick}
                 onEditProfile={handleEditProfileClick}
                 onAddPlace={handleAddPlaceClick}
@@ -167,8 +171,7 @@ function App() {
                 onCardLike={handleCardLike}
                 onTrashClick={handleDeleteCardClick}
                 cards={cards}
-              />} 
-            />}
+            />} 
           />
         </Routes>
 

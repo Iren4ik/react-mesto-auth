@@ -19,4 +19,23 @@ export const register = (email, password) => {
   .catch((err) => console.log(err))
 }; 
 
-export default register;
+export const authorize  = (email, password) => {
+  return fetch(`${BASE_URL}/signin`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ email, password })
+  })
+  .then(res => checkResponse(res))
+  .then((data) => {
+    if (data.token) {
+      //Сохраним токен в localStorage пользователя
+      localStorage.setItem("token", data.token);
+      return data;
+    } 
+  })
+  .catch((err) => console.log(err))
+}; 
+
+
