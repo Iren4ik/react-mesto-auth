@@ -1,30 +1,18 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
+import { useFormWithValidation } from "../hooks/useFormWithValidation";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, isPreloading }) {
 
-  const [title, setTitle] = React.useState("");
-  const [link, setLink] = React.useState("");
+  const { values, errors, isValid, handleChange, resetForm } = useFormWithValidation();
 
   React.useEffect(() => {
-    setTitle("");
-    setLink("");
-  }, [isOpen]);
-
-  function handleChangeTitle(e) {
-    setTitle(e.target.value);
-  }
-
-  function handleChangeLink(e) {
-    setLink(e.target.value);
-  }
+    resetForm();
+  }, [isOpen, resetForm]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    onAddPlace({
-      name: title,
-      link,
-    });
+    onAddPlace(values);
   }
 
   return (
@@ -35,10 +23,13 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isPreloading }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isDisabled={!isValid}
     >
       <label className="popup__input-element">
         <input
-          className="popup__input popup__input_type_caption"
+          className={
+            errors.name ? "popup__input popup__input_type_caption popup__input_valid_error" : "popup__input popup__input_type_caption"
+          }
           id="caption"
           type="text"
           name="name"
@@ -46,23 +37,25 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isPreloading }) {
           minLength="2"
           maxLength="30"
           required
-          value={title || ""}
-          onChange={handleChangeTitle}
+          value={values.name || ""}
+          onChange={handleChange}
         />
-        <span className="caption-error popup__error"></span>
+        <span className="caption-error popup__error popup__error_visible">{errors.name}</span>
       </label>
       <label className="popup__input-element">
         <input
-          className="popup__input popup__input_type_link"
+          className={
+            errors.link ? "popup__input popup__input_type_link popup__input_valid_error" : "popup__input popup__input_type_link"
+          }
           id="link"
           type="url"
           name="link"
           placeholder="Ссылка на картинку"
           required
-          value={link || ""}
-          onChange={handleChangeLink}
+          value={values.link || ""}
+          onChange={handleChange}
         />
-        <span className="link-error popup__error"></span>
+        <span className="link-error popup__error popup__error_visible">{errors.link}</span>
       </label>
     </PopupWithForm>
   );
