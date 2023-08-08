@@ -1,20 +1,14 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./styles/Authorization.css";
-import {register} from "../utils/auth.js"
 
-function Register() {
 
+function Register({ onRegister }) {
   const [formValue, setFormValue] = React.useState({
     email: '',
     password: ''
   });
 
-  const navigate = useNavigate();
-
-  //получаем объект события `e`, который содержит информацию о текущем элементе формы, 
-  //который был изменен. Затем он извлекает свойства `name` и `value` 
-  //из объекта события и использует их для обновления значения в объекте `formValue`.
   const handleChange = (e) => {
     const {name, value} = e.target;
     setFormValue({
@@ -25,13 +19,9 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = formValue;
-    register(email, password)
-      .then((res) => {
-        navigate('/sign-in', {replace: true});
-      });
+    onRegister(formValue.email, formValue.password)
   }
-
+  
   return (
     <main className="content">
       <div className="authorization">

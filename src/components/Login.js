@@ -1,16 +1,11 @@
 import React from "react";
 import "./styles/Authorization.css";
-import { useNavigate } from "react-router-dom";
-import {authorize} from "../utils/auth.js"
 
-function Login({handleLogin}) {
-
+function Login({onLogin}) {
   const [formValue, setFormValue] = React.useState({
     email: '',
     password: ''
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -25,16 +20,8 @@ function Login({handleLogin}) {
     if (!formValue.email || !formValue.password) {
       return;
     }
-    authorize(formValue.email, formValue.password)
-      .then ((data) => {
-        if (data.token) {
-          setFormValue({email: '', password: ''});
-          handleLogin();
-          navigate('/', {replace: true})
-        }
-      })
+    onLogin(formValue.email, formValue.password)
   }
-
 
   return (
     <main className="content">

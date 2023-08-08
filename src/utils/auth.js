@@ -48,6 +48,7 @@ export const getContent = (token) => {
   })
   .then(res => checkResponse(res))
   .then(data => data)
+  .catch((err) => console.log(err))
 };
 
 

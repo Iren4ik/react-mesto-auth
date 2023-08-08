@@ -14,14 +14,14 @@ import Register from "./Register";
 import { api } from "../utils/api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import ProtectedRouteElement from "./ProtectedRoute";
-import {getContent} from "../utils/auth.js"
+import {register, authorize, getContent} from "../utils/auth.js"
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isDeleteCardPopupOpen, setDeleteCardPopupOpen] = React.useState(false);
-  const [isRegisterPopupOpen, setRegisterPopupOpen] = React.useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [isPreloading, setPreloading] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
@@ -29,19 +29,24 @@ function App() {
   const [cardToDelete, setCardToDelete] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [email, setEmail] = React.useState();
+  const [isRegister, setIsRegister] = React.useState(false);
 
   const navigate = useNavigate();
 
+  //Получение данных пользователя и карточек, если залогинился
   React.useEffect(() => {
-    Promise.all([api.getProfileInfo(), api.getInitialCards()])
+    if (loggedIn) {
+      Promise.all([api.getProfileInfo(), api.getInitialCards()])
       .then(([dataUser, dataCards]) => {
         setCurrentUser(dataUser);
         setCards(dataCards);
       })
       .catch((error) => console.log(`Что-то пошло не так: ${error}`));
-  }, []);
+    }
+  }, [loggedIn]);
 
-  function tokenCheck() {
+  //Проверка токена при загрзке страницы
+  React.useEffect(() => {
     const token = localStorage.getItem('token');
     // если у пользователя есть токен в localStorage, 
     // эта функция проверит, действующий он или нет
@@ -55,23 +60,7 @@ function App() {
           }
         });
     }
-  }
-
-  React.useEffect(() => {
-    tokenCheck();
   }, []);
-
-  //Изменение статуса логина
-  function handleLogin() {
-    setLoggedIn(true);
-  }
-
-  //Выход из системы
-  function handleLogout() {
-    setLoggedIn(false);
-    localStorage.removeItem("token");
-    navigate("/sign-in");
-  }
 
   // Открытие попапа ававтара
   function handleEditAvatarClick() {
@@ -94,6 +83,11 @@ function App() {
     setCardToDelete(card);
   }
 
+  // Открытие попапа успешной или не совсем регистрации
+  function infoTooltipPopupOpen() {
+    setIsInfoTooltipOpen(true);
+  }
+
   // Открытие выбранной карточки
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -105,7 +99,7 @@ function App() {
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setDeleteCardPopupOpen(false);
-    setRegisterPopupOpen(false);
+    setIsInfoTooltipOpen(false)
     setSelectedCard(null);
     setCardToDelete({});
   }
@@ -178,6 +172,48 @@ function App() {
     handleSubmit(makeRequest);
   }
 
+    //Обработка запроса на регистрацию
+    function handleRegister(email, password) {
+      register(email, password)
+      .then((res) => {
+        setIsRegister(true);
+        infoTooltipPopupOpen();
+        navigate('/sign-in', {replace: true});
+      })
+      .catch(() => {
+        setIsRegister(false);
+        infoTooltipPopupOpen();
+      })
+    }
+  
+    //Изменение статуса логина
+    function handleLoggedIn() {
+      setLoggedIn(true);
+    }
+  
+    //Обработка запроса на авторизацию
+    function handleLogin(email, password) {
+      authorize(email, password)
+      .then((data) => {
+        if (data.token) {
+          setEmail(email);
+          handleLoggedIn();
+          navigate('/', {replace: true})
+        }
+      })
+      .catch(() => {
+        setLoggedIn(false);
+        // infoTooltipPopupOpen();
+      })
+    }
+  
+    //Выход из системы
+    function handleLogout() {
+      setLoggedIn(false);
+      localStorage.removeItem("token");
+      navigate("/sign-in");
+    }
+
   //«Внедряем» данные из currentUser с помощью провайдера
   //пропс value содержит значение, которое распространаяется дочерним элементам
   return (
@@ -186,8 +222,8 @@ function App() {
         <Header onLogout={handleLogout} email={email}/>
 
         <Routes>
-          <Route path="/sign-up" element={<Register />} />
-          <Route path="/sign-in" element={<Login handleLogin={handleLogin}/>} />
+          <Route path="/sign-up" element={<Register onRegister={handleRegister}/>} />
+          <Route path="/sign-in" element={<Login onLogin={handleLogin}/>} />
           {/* <Route path='*' 
               element={loggedIn ? (<Navigate to='/' replace/>) : (<Navigate to='/sign-in'replace/>)} 
           /> */}
@@ -210,8 +246,9 @@ function App() {
         <Footer />
 
         <InfoTooltip
-          isOpen={isRegisterPopupOpen}
+          isOpen={isInfoTooltipOpen}
           onClose={closeAllPopups}
+          isConfirmed={isRegister}
         />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <EditProfilePopup
