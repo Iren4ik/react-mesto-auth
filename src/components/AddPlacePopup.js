@@ -28,9 +28,8 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isPreloading }) {
       <label className="popup__input-element">
         <input
           className={
-            errors.name ? "popup__input popup__input_type_caption popup__input_valid_error" : "popup__input popup__input_type_caption"
+            errors.name ? "popup__input popup__input_valid_error" : "popup__input"
           }
-          id="caption"
           type="text"
           name="name"
           placeholder="Название"
@@ -40,14 +39,13 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isPreloading }) {
           value={values.name || ""}
           onChange={handleChange}
         />
-        <span className="caption-error popup__error popup__error_visible">{errors.name}</span>
+        <span className="popup__error popup__error_visible">{errors.name}</span>
       </label>
       <label className="popup__input-element">
         <input
           className={
-            errors.link ? "popup__input popup__input_type_link popup__input_valid_error" : "popup__input popup__input_type_link"
+            errors.link ? "popup__input popup__input_valid_error" : "popup__input"
           }
-          id="link"
           type="url"
           name="link"
           placeholder="Ссылка на картинку"
@@ -55,7 +53,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isPreloading }) {
           value={values.link || ""}
           onChange={handleChange}
         />
-        <span className="link-error popup__error popup__error_visible">{errors.link}</span>
+        <span className="popup__error popup__error_visible">{errors.link}</span>
       </label>
     </PopupWithForm>
   );

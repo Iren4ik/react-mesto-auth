@@ -34,9 +34,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isPreloading }) {
       <label className="popup__input-element">
         <input
           className={
-            errors.name ? "popup__input popup__input_type_name popup__input_valid_error" : "popup__input popup__input_type_name"
+            errors.name ? "popup__input popup__input_valid_error" : "popup__input"
           }
-          id="name"
           type="text"
           name="name"
           placeholder="Имя"
@@ -45,17 +44,15 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isPreloading }) {
           required
           value={values.name || ''}
           onChange={handleChange}
-          defaultValue={values.name}
         />
-        <span className="name-error popup__error popup__error_visible">{errors.name}</span>
+        <span className="popup__error popup__error_visible">{errors.name}</span>
       </label>
 
       <label className="popup__input-element">
         <input
           className={
-            errors.about ? "popup__input popup__input_type_job popup__input_valid_error" : "popup__input popup__input_type_job"
+            errors.about ? "popup__input popup__input_valid_error" : "popup__input"
           }
-          id="job"
           type="text"
           name="about"
           placeholder="О себе"
@@ -64,9 +61,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isPreloading }) {
           required
           value={values.about || ''}
           onChange={handleChange}
-          defaultValue={values.about}
         />
-        <span className="job-error popup__error popup__error_visible">{errors.about}</span>
+        <span className="popup__error popup__error_visible">{errors.about}</span>
       </label>
     </PopupWithForm>
   );

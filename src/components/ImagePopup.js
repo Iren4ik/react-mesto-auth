@@ -6,7 +6,7 @@ function ImagePopup({ card, onClose }) {
   usePopupClose(card?.link, onClose);
 
   return (
-    <section className={`popup popup_overlay_dark popup_feat_show-image ${card ? "popup_opened" : ""}`}>
+    <section className={`popup popup_overlay_dark ${card ? "popup_opened" : ""}`}>
       {card && (
         <div className="popup__container_type_image">
           <figure className="popup__figure">

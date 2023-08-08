@@ -28,9 +28,8 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isPreloading }) {
       <label className="popup__input-element">
         <input
           className={
-            errors.name ? "popup__input popup__input_type_avatar popup__input_valid_error" : "popup__input popup__input_type_avatar"
+            errors.name ? "popup__input popup__input_valid_error" : "popup__input"
           }
-          id="avatar"
           type="url"
           name="avatar"
           placeholder="Ссылка на картинку"
@@ -38,7 +37,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isPreloading }) {
           onChange={handleChange}
           value={values.avatar || ""}
         />
-        <span className="avatar-error popup__error popup__error_visible">{errors.avatar}</span>
+        <span className="popup__error popup__error_visible">{errors.avatar}</span>
       </label>
     </PopupWithForm>
   );

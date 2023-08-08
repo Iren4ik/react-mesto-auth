@@ -6,19 +6,6 @@ function Login({onLogin}) {
 
   const { values, errors, isValid, handleChange, resetForm } = useFormWithValidation();
 
-  // const [formValue, setFormValue] = React.useState({
-  //   email: '',
-  //   password: ''
-  // });
-
-  // const handleChange = (e) => {
-  //   const {name, value} = e.target;
-  //   setFormValue({
-  //     ...formValue,
-  //     [name]: value
-  //   });
-  // }
-
   React.useEffect(() => {
     resetForm();
   }, [resetForm]);
@@ -35,7 +22,7 @@ function Login({onLogin}) {
     <main className="content">
       <div className="authorization">
         <p className="authorization__welcome">Вход</p>
-        <form className="authorization__form form" onSubmit={handleSubmit}>
+        <form className="authorization__form form" onSubmit={handleSubmit} noValidate>
           <input
             className={
               errors.email ? "authorization__input authorization__input_valid_error" : "authorization__input"
@@ -48,7 +35,7 @@ function Login({onLogin}) {
             value={values.email || ""}
             onChange={handleChange}
           />
-          <span className="popup__error popup__error_visible">{errors.email}</span>
+          <span className="authorization__error authorization__error_visible">{errors.email}</span>
           <input
             className={
               errors.password ? "authorization__input authorization__input_valid_error" : "authorization__input"
@@ -62,7 +49,7 @@ function Login({onLogin}) {
             value={values.password || ""}
             onChange={handleChange}
           />
-          <span className="popup__error popup__error_visible">{errors.password}</span>
+          <span className="authorization__error authorization__error_visible">{errors.password}</span>
           <div className="authorization__button-container">
             <button 
               type="submit" 
