@@ -208,7 +208,7 @@ function App() {
       })
       .catch(() => {
         setLoggedIn(false);
-        // infoTooltipPopupOpen();
+        infoTooltipPopupOpen();
       })
     }
   

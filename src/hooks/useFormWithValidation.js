@@ -13,7 +13,7 @@ export function useFormWithValidation() {
     const value = target.value;
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
-    setIsValid(target.closest(".popup__input-container").checkValidity());
+    setIsValid(target.closest(".form").checkValidity());
   };
 
   //Колбек для сброса данных

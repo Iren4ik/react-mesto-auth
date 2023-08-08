@@ -1,56 +1,76 @@
 import React from "react";
 import "./styles/Authorization.css";
+import { useFormWithValidation } from "../hooks/useFormWithValidation";
 
 function Login({onLogin}) {
-  const [formValue, setFormValue] = React.useState({
-    email: '',
-    password: ''
-  });
 
-  const handleChange = (e) => {
-    const {name, value} = e.target;
-    setFormValue({
-      ...formValue,
-      [name]: value
-    });
-  }
+  const { values, errors, isValid, handleChange, resetForm } = useFormWithValidation();
+
+  // const [formValue, setFormValue] = React.useState({
+  //   email: '',
+  //   password: ''
+  // });
+
+  // const handleChange = (e) => {
+  //   const {name, value} = e.target;
+  //   setFormValue({
+  //     ...formValue,
+  //     [name]: value
+  //   });
+  // }
+
+  React.useEffect(() => {
+    resetForm();
+  }, [resetForm]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formValue.email || !formValue.password) {
+    if (!values.email || !values.password) {
       return;
     }
-    onLogin(formValue.email, formValue.password)
+    onLogin(values.email, values.password)
   }
 
   return (
     <main className="content">
       <div className="authorization">
         <p className="authorization__welcome">Вход</p>
-        <form className="authorization__form" onSubmit={handleSubmit}>
+        <form className="authorization__form form" onSubmit={handleSubmit}>
           <input
+            className={
+              errors.email ? "authorization__input authorization__input_valid_error" : "authorization__input"
+            }
             required
-            className="authorization__input"
             id="email"
             name="email"
             type="email"
             placeholder="Email"
-            value={formValue.email}
+            value={values.email || ""}
             onChange={handleChange}
           />
+          <span className="popup__error popup__error_visible">{errors.email}</span>
           <input
+            className={
+              errors.password ? "authorization__input authorization__input_valid_error" : "authorization__input"
+            }
             required
-            className="authorization__input"
             id="password"
             name="password"
             type="password"
             placeholder="Пароль"
             minLength="8"
-            value={formValue.password}
+            value={values.password || ""}
             onChange={handleChange}
           />
+          <span className="popup__error popup__error_visible">{errors.password}</span>
           <div className="authorization__button-container">
-            <button type="submit" className="authorization__button">
+            <button 
+              type="submit" 
+              className={
+                isValid ? "authorization__button" : "authorization__button authorization__button_disabled"
+              }
+              disabled={!isValid}
+            >
               Войти
             </button>
           </div>
