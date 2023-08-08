@@ -50,7 +50,7 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            setEmail(res.email);
+            setEmail(res.data.email);
             navigate('/', {replace: true})
           }
         });
