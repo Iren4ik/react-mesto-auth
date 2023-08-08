@@ -176,13 +176,18 @@ function App() {
     function handleRegister(email, password) {
       register(email, password)
       .then((res) => {
-        setIsRegister(true);
-        infoTooltipPopupOpen();
-        navigate('/sign-in', {replace: true});
+        if (res) {
+          setIsRegister(true);
+          infoTooltipPopupOpen();
+          navigate('/sign-in', {replace: true});
+        } else {
+          infoTooltipPopupOpen();
+          setIsRegister(false);
+        }
       })
       .catch(() => {
-        setIsRegister(false);
         infoTooltipPopupOpen();
+        setIsRegister(false);
       })
     }
   

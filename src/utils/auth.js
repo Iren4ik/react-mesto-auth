@@ -4,7 +4,7 @@ function checkResponse(res) {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(`Ой! Ошибка: ${res.status}`);
+  return Promise.reject(`Ой! Ошибка ${res.status} : ${res.statusText}`);
 }
 
 export const register = (email, password) => {
