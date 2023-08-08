@@ -1,5 +1,4 @@
 import React from "react";
-import "./styles/Authorization.css";
 import { useFormWithValidation } from "../hooks/useFormWithValidation";
 
 function Login({onLogin}) {

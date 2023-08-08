@@ -1,4 +1,3 @@
-import "./styles/InfoTooltip.css";
 import { usePopupClose } from "../hooks/usePopupClose";
 import successRegister from "../images/success-register.svg";
 import errorRegister from "../images/error-register.svg";

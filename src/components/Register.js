@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./styles/Authorization.css";
 import { useFormWithValidation } from "../hooks/useFormWithValidation";
 
 function Register({ onRegister }) {

@@ -9,3 +9,9 @@
   max-width: 358px;
   margin: 0 auto 60px;
 }
+
+@media screen and (max-width: 425px) {
+  .popup__tootltip-header {
+    font-size: 20px;
+  }
+}

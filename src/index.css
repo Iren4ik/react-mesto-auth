@@ -67,4 +67,16 @@
 @import url(./blocks/popup/__error/_visible/popup__error_visible.css);
 @import url(./blocks/popup/__header/_delete-popup/popup__header_delete-popup.css);
 
+@import url(./blocks/authorization/authorization.css);
+@import url(./blocks/authorization/__welcome/authorization__welcome.css);
+@import url(./blocks/authorization/__form/authorization__form.css);
+@import url(./blocks/authorization/__input/authorization__input.css);
+@import url(./blocks/authorization/__input/_valid_error/authorization__input_valid_error.css);
+@import url(./blocks/authorization/__button/authorization__button.css);
+@import url(./blocks/authorization/__button/_disabled/authorization__button_disabled.css);
+@import url(./blocks/authorization/__signin/authorization__signin.css);
+@import url(./blocks/authorization/__link/authorization__link.css);
+@import url(./blocks/authorization/__error/authorization__error.css);
+@import url(./blocks/authorization/__error/_visible/authorization__error_visible.css);
+
 @import url(./blocks/opacity/opacity.css);

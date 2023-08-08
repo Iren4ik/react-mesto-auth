@@ -18,3 +18,9 @@
     margin-right: 8.4%;
   }
 }
+
+@media screen and (max-width: 425px) {
+  .header__link {
+    font-size: 14px;
+  }
+}
