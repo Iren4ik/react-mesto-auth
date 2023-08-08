@@ -10,7 +10,6 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isPreloading }) {
   // Подписка на контекст
   const currentUser = React.useContext(CurrentUserContext);
 
-
   React.useEffect(() => {
     if (currentUser) {
       resetForm(currentUser);

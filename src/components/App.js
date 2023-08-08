@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -14,6 +14,7 @@ import Register from "./Register";
 import { api } from "../utils/api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import ProtectedRouteElement from "./ProtectedRoute";
+import {getContent} from "../utils/auth.js"
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
@@ -28,9 +29,7 @@ function App() {
   const [cardToDelete, setCardToDelete] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
 
-  function handleLogin() {
-    setLoggedIn(true);
-  }
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     Promise.all([api.getProfileInfo(), api.getInitialCards()])
@@ -40,6 +39,36 @@ function App() {
       })
       .catch((error) => console.log(`Что-то пошло не так: ${error}`));
   }, []);
+
+  function tokenCheck() {
+    const token = localStorage.getItem('token');
+    // если у пользователя есть токен в localStorage, 
+    // эта функция проверит, действующий он или нет
+    if (token){
+      getContent(token)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            navigate('/', {replace: true})
+          }
+        });
+    }
+  }
+
+  React.useEffect(() => {
+    tokenCheck();
+  }, []);
+
+  function handleLogin() {
+    setLoggedIn(true);
+  }
+
+  //Выход из системы
+  function handleLogout() {
+    setLoggedIn(false);
+    localStorage.removeItem("token");
+    navigate("/sign-in");
+  }
 
   // Открытие попапа ававтара
   function handleEditAvatarClick() {
@@ -151,7 +180,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header />
+        <Header onLogout={handleLogout}/>
 
         <Routes>
           <Route path="/sign-up" element={<Register />} />
