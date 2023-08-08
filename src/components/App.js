@@ -28,6 +28,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [cardToDelete, setCardToDelete] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const [email, setEmail] = React.useState();
 
   const navigate = useNavigate();
 
@@ -49,6 +50,7 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
+            setEmail(res.email);
             navigate('/', {replace: true})
           }
         });
@@ -59,6 +61,7 @@ function App() {
     tokenCheck();
   }, []);
 
+  //Изменение статуса логина
   function handleLogin() {
     setLoggedIn(true);
   }
@@ -180,7 +183,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header onLogout={handleLogout}/>
+        <Header onLogout={handleLogout} email={email}/>
 
         <Routes>
           <Route path="/sign-up" element={<Register />} />
