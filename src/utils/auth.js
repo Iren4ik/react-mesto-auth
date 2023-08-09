@@ -16,7 +16,6 @@ export const register = (email, password) => {
     body: JSON.stringify({ email, password })
   })
   .then(res => checkResponse(res))
-  .catch((err) => console.log(err))
 }; 
 
 export const authorize  = (email, password) => {
@@ -35,7 +34,6 @@ export const authorize  = (email, password) => {
       return data;
     } 
   })
-  .catch((err) => console.log(err))
 }; 
 
 export const getContent = (token) => {
@@ -48,7 +46,6 @@ export const getContent = (token) => {
   })
   .then(res => checkResponse(res))
   .then(data => data)
-  .catch((err) => console.log(err))
 };
 
 

@@ -41,7 +41,7 @@ function App() {
         setCurrentUser(dataUser);
         setCards(dataCards);
       })
-      .catch((error) => console.log(`Что-то пошло не так: ${error}`));
+      .catch(console.error);
     }
   }, [loggedIn]);
 
@@ -58,7 +58,8 @@ function App() {
             setEmail(res.data.email);
             navigate('/', {replace: true})
           }
-        });
+        })
+        .catch(console.error);
     }
   }, []);
 
@@ -123,7 +124,8 @@ function App() {
       return api.changeLikeCardStatus(card._id, !isLiked)
         .then((newCard) => {
           setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
-        });
+        })
+        .catch(console.error);
     }
     handleSubmit(makeRequest);
   }
@@ -134,7 +136,8 @@ function App() {
       return api.deleteCard(card._id)
         .then(() => {
           setCards((state) => state.filter((c) => c._id !== card._id));
-        });
+        })
+        .catch(console.error);
     }
     handleSubmit(makeRequest);
   }
@@ -145,7 +148,8 @@ function App() {
       return api.setUserInfo(inputValues)
         .then((dataUser) => {
           setCurrentUser(dataUser);
-        });
+        })
+        .catch(console.error);
     }
     handleSubmit(makeRequest);
   }
@@ -156,7 +160,8 @@ function App() {
       return api.setUserAvatar(inputValue)
         .then((dataUser) => {
           setCurrentUser(dataUser);
-        });
+        })
+        .catch(console.error);
     }
     handleSubmit(makeRequest);
   }
@@ -167,7 +172,8 @@ function App() {
       return api.postNewCard(inputValue)
         .then((newCard) => {
           setCards([newCard, ...cards]);
-        });
+        })
+        .catch(console.error);
     }
     handleSubmit(makeRequest);
   }
@@ -188,6 +194,7 @@ function App() {
       .catch(() => {
         infoTooltipPopupOpen();
         setIsRegister(false);
+        console.error();
       })
     }
   
@@ -209,6 +216,7 @@ function App() {
       .catch(() => {
         setLoggedIn(false);
         infoTooltipPopupOpen();
+        console.error();
       })
     }
   
