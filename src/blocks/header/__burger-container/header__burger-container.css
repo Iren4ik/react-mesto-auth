@@ -1,0 +1,14 @@
+.header__burger-container {
+  display: none;
+}
+
+@media screen and (max-width: 500px) {
+  .header__burger-container {
+    display: block;
+    cursor: pointer;
+    align-self: center;
+    position: absolute;
+    top: 35px;
+    right: 30px;
+  }
+}

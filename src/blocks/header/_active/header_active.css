@@ -1,0 +1,9 @@
+.header_active {
+  padding-top: 0;
+}
+
+@media screen and (max-width: 500px) {
+  .header_active {
+    padding-top: 170px;
+  }
+}
