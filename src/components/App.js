@@ -35,7 +35,9 @@ function App() {
 
   //Получение данных пользователя и карточек, если залогинился
   React.useEffect(() => {
+    console.log(localStorage);
     if (loggedIn) {
+    console.log(localStorage);
       Promise.all([api.getProfileInfo(), api.getInitialCards()])
       .then(([dataUser, dataCards]) => {
         setCurrentUser(dataUser);
@@ -61,7 +63,7 @@ function App() {
         })
         .catch(console.error);
     }
-  }, []);
+  }, [navigate]);
 
   // Открытие попапа ававтара
   function handleEditAvatarClick() {
