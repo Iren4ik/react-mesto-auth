@@ -35,17 +35,18 @@ function App() {
 
   //Получение данных пользователя и карточек, если залогинился
   React.useEffect(() => {
-    console.log(localStorage);
+    // console.log(localStorage);
     if (loggedIn) {
-    console.log(localStorage);
       Promise.all([api.getProfileInfo(), api.getInitialCards()])
       .then(([dataUser, dataCards]) => {
+        // console.log(dataCards);
         setCurrentUser(dataUser);
         setCards(dataCards);
       })
       .catch(console.error);
     }
   }, [loggedIn]);
+
 
   //Проверка токена при загрзке страницы
   React.useEffect(() => {
@@ -57,7 +58,7 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            setEmail(res.data.email);
+            setEmail(res.email);
             navigate('/', {replace: true})
           }
         })
@@ -121,7 +122,8 @@ function App() {
   // Поставить лайк
   function handleCardLike(card) {
     function makeRequest() {
-      const isLiked = card.likes.some((i) => i._id === currentUser._id);
+      // const isLiked = card.likes.some((item) => item._id === currentUser._id);
+      const isLiked = card.likes.some((item) => item === currentUser._id);
       // return позволяет дальше продолжать цепочку then, catch, finally
       return api.changeLikeCardStatus(card._id, !isLiked)
         .then((newCard) => {
@@ -217,6 +219,7 @@ function App() {
       })
       .catch(() => {
         setLoggedIn(false);
+        setIsRegister(false);
         infoTooltipPopupOpen();
         console.error();
       })
