@@ -61,7 +61,7 @@ function App() {
         })
         .catch(console.error);
     }
-  }, []);
+  }, [navigate]);
 
   // Открытие попапа ававтара
   function handleEditAvatarClick() {
